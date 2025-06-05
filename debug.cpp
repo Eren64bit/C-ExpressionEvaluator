@@ -15,7 +15,7 @@ std::string errorHandler::tokenTypeToString(TokenType type) {
     case TokenType::MINUS:
         return "MINUS";
     case TokenType::MULT:
-        return "MULTIPICATION";
+        return "MULTIPLICATION";
     case TokenType::DIVIDE:
         return "DIVIDE";
     case TokenType::LPAREN:

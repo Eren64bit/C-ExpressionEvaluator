@@ -1,4 +1,5 @@
 #include "parser.h"
+#include <stdexcept>
 
 void Parser::advance() {
     currentToken = tokenr.getNextToken();
@@ -54,4 +55,4 @@ double Parser::factor() {
     default:
         throw std::runtime_error("UNEXPECTED TOKEN");
     }
-}
+}}
