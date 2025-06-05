@@ -1,5 +1,8 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
+
 
 enum class TokenType {
     PLUS, MINUS, MULT, DIVIDE,
