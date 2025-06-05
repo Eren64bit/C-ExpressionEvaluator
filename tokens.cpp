@@ -22,8 +22,8 @@ Token tokenizer::peek() {
 }
 
 Token tokenizer::nextToken() {
-    while(pos < input.size() && input[pos] == ' ')
-        pos++;
+while (pos < input.size() && std::isspace(static_cast<unsigned char>(input[pos])))
+    ++pos;
     if (pos >= input.size())
         return {TokenType::END_OF_FILE, 0};
 
@@ -53,7 +53,8 @@ Token tokenizer::nextToken() {
     }
     if (std::isalpha(ch)) {
         std::string temp;
-        while (pos < input.size() && (input[pos] != '.' && input[pos] != '#' && input[pos] != '$' && input[pos] != '@')) {
+        while (pos < input.size() &&
+       (std::isalnum(static_cast<unsigned char>(input[pos])) || input[pos] == '_')) {
             temp += input[pos++];
         }
 
