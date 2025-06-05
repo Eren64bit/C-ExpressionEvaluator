@@ -1,4 +1,6 @@
 #include "ASTnode.h"
+#include <iostream>
+#include <stdexcept>
 
 double NumberNode::evaluate(const std::unordered_map<std::string, double>&) const {
     return value;
@@ -23,8 +25,8 @@ double BinaryOpNode::evaluate(const std::unordered_map<std::string, double>& var
     {
     case '+': return l + r;
     case ':': return l - r;
-    case '*': return l * r;
-    case '/': if ( r== 0) throw std::runtime_error("Division by zero"); return l / r;
+    case '-': return l - r;
+    case '/': if (r == 0) throw std::runtime_error("Division by zero"); return l / r;
     default: throw std::runtime_error("Unknown operator");
     }
 }
