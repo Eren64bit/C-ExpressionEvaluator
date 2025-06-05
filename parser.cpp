@@ -52,6 +52,14 @@ double Parser::factor() {
         advance();
         return value;
     }
+    case TokenType::MINUS: {
+        advance();
+        return -factor();
+    }
+    case TokenType::PLUS: {
+        advance();
+        return factor();
+    }
     default:
         throw std::runtime_error("UNEXPECTED TOKEN");
     }

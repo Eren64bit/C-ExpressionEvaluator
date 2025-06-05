@@ -7,13 +7,15 @@
 enum class TokenType {
     PLUS, MINUS, MULT, DIVIDE,
     LPAREN, RPAREN,
-    NUMBER, INVALID, END_OF_FILE
+    NUMBER, INVALID, END_OF_FILE,
+    IDENTIFIER
 };
 
 class Token{
     public:
         TokenType kind;
         double value;
+        std::string name;
 
 };
 

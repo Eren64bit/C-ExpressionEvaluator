@@ -6,7 +6,7 @@
 
 Token tokenizer::advance(TokenType type) {
     pos++;
-    return {type, 0};
+    return {type, 0.0};
 }
 
 Token tokenizer::getNextToken() {
@@ -48,6 +48,13 @@ Token tokenizer::nextToken() {
             std::cerr << e.what() << '\n';
         }
         
+    }
+    if (std::isalpha(ch)) {
+        std::string temp;
+        while (pos < input.size() && (input[pos] != '.' && input[pos] != '#' && input[pos] != '$' && input[pos] != '@')) {
+            temp += input[pos++];
+        }
+        return {TokenType::IDENTIFIER, 0, temp};
     }
 
     pos++;
