@@ -48,6 +48,7 @@ while (pos < input.size() && std::isspace(static_cast<unsigned char>(input[pos])
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
+           return {TokenType::INVALID, 0};
         }
         
     }

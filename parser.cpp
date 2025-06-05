@@ -7,6 +7,7 @@ void Parser::advance() {
 }
 
 double Parser::parse() {
+    advance();
     if (statement()) {
         return 0;
     }

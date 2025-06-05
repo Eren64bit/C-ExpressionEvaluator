@@ -9,12 +9,16 @@
 
 
 int main() {
-    tokenizer t("3 + (4 * 5) - 6 / 2");
-    Parser p(t);
+    std::unordered_map<std::string, double> sVars;
+    tokenizer t("var x = 5");
+    tokenizer r("x * 2 + 3");
+    
+    Parser p1(t, sVars);
+    Parser p2(r, sVars);
 
-    p.advance();
-    double result = p.expr();
+    p1.parse();
+    double result = p2.parse();
 
-    std::cout << "Result: " << result << "\n";
+    std::cout << "Sonuç: " << result << "\n";
     return 0;
 }

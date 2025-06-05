@@ -7,13 +7,14 @@ private:
     tokenizer& tokenr;
     Token currentToken;
 
-    std::unordered_map<std::string, double> varMap;
+    std::unordered_map<std::string, double>& varMap;
 
 public:
 
     void advance();
 
-    Parser(tokenizer& t) : tokenr(t) {}
+    Parser(tokenizer& t, std::unordered_map<std::string, double>& vars) 
+        : tokenr(t), varMap(vars) {}
 
     double parse();
     double expr();
