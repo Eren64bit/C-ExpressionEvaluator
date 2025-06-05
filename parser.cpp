@@ -1,8 +1,40 @@
 #include "parser.h"
 #include <stdexcept>
 
+
 void Parser::advance() {
     currentToken = tokenr.getNextToken();
+}
+
+double Parser::parse() {
+    if (statement()) {
+        return 0;
+    }
+    return expr();
+}
+
+bool Parser::statement() {
+    if (currentToken.kind == TokenType::VAR) {
+        advance();
+        if (currentToken.kind == TokenType::IDENTIFIER) {
+            std::string varName = currentToken.name;
+            advance();
+            if (currentToken.kind == TokenType::ASSIGN) {
+                advance();
+                double rValue = expr();
+                varMap[varName] = rValue;
+                return true;
+            } else {
+                throw std::runtime_error("Expected '=' after variable name\n");
+                return false;
+            }
+        } else {
+            throw std::runtime_error("Expected Variable name after Var\n");
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 double Parser::expr() {
@@ -34,9 +66,7 @@ double Parser::term() {
     }
     return rs;
 }
-//3*5*7 --> 15*7 --> 4 + 5 + 7
-//(3+4)+4*5
-//3 + 4 * 5
+
 double Parser::factor() {
     switch (currentToken.kind)
     {
@@ -60,7 +90,17 @@ double Parser::factor() {
         advance();
         return factor();
     }
+    case TokenType::IDENTIFIER: {
+        std::string name = currentToken.name;
+        advance();
+        auto it = varMap.find(name);
+        if (it != varMap.end()) {
+            return it->second;
+        } else {
+            throw std::runtime_error("Undefined variable: " + name);
+        }
+    }
     default:
         throw std::runtime_error("UNEXPECTED TOKEN");
     }
-}}
+}

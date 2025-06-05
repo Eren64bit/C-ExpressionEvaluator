@@ -7,8 +7,9 @@
 enum class TokenType {
     PLUS, MINUS, MULT, DIVIDE,
     LPAREN, RPAREN,
-    NUMBER, INVALID, END_OF_FILE,
-    IDENTIFIER
+    IDENTIFIER, VAR, ASSIGN,
+    NUMBER, INVALID, END_OF_FILE
+    
 };
 
 class Token{

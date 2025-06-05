@@ -1,4 +1,5 @@
 #include "tokens.h"
+#include <bits/stdc++.h>
 
 /*PLUS, MINUS, MULT, DIVIDE,
     LPAREN, RPAREN,
@@ -34,6 +35,7 @@ Token tokenizer::nextToken() {
     if (ch == '/') return advance(TokenType::DIVIDE);
     if (ch == '(') return advance(TokenType::LPAREN);
     if (ch == ')') return advance(TokenType::RPAREN);
+    if (ch == '=') return advance(TokenType::ASSIGN);
     if (std::isdigit(ch)) {
         std::string temp;
         while (pos < input.size() && (std::isdigit(input[pos]) || input[pos] == '.')) {
@@ -54,6 +56,12 @@ Token tokenizer::nextToken() {
         while (pos < input.size() && (input[pos] != '.' && input[pos] != '#' && input[pos] != '$' && input[pos] != '@')) {
             temp += input[pos++];
         }
+
+        std::string upperTemp = temp;
+        std::transform(upperTemp.begin(), upperTemp.end(), upperTemp.begin(), ::toupper);
+        if (upperTemp == "VAR")
+            return {TokenType::VAR, 0};
+
         return {TokenType::IDENTIFIER, 0, temp};
     }
 
