@@ -39,7 +39,15 @@ Token tokenizer::nextToken() {
         while (pos < input.size() && (std::isdigit(input[pos]) || input[pos] == '.')) {
             temp += input[pos++];
         }
-        return {TokenType::NUMBER, std::stod(temp)};
+        try
+        {
+            return {TokenType::NUMBER, std::stod(temp)};
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
     }
 
     pos++;
