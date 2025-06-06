@@ -16,10 +16,10 @@ public:
     Parser(tokenizer& t, std::unordered_map<std::string, double>& vars) 
         : tokenr(t), varMap(vars) {}
 
-    double parse();
-    double expr();
-    double term();
-    double factor();
+    std::unique_ptr<ASTnode> parse();
+    std::unique_ptr<ASTnode> expr();
+    std::unique_ptr<ASTnode> term();
+    std::unique_ptr<ASTnode> factor();
     bool statement();
 
 };

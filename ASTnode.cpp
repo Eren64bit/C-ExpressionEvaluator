@@ -24,8 +24,8 @@ double BinaryOpNode::evaluate(const std::unordered_map<std::string, double>& var
     switch (op)
     {
     case '+': return l + r;
-    case ':': return l - r;
     case '-': return l - r;
+    case '*': return l * r;
     case '/': if (r == 0) throw std::runtime_error("Division by zero"); return l / r;
     default: throw std::runtime_error("Unknown operator");
     }

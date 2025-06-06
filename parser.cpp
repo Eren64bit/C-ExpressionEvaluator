@@ -1,15 +1,17 @@
 #include "parser.h"
 #include <stdexcept>
 
+#include <ASTnode.h>
+
 
 void Parser::advance() {
     currentToken = tokenr.getNextToken();
 }
 
-double Parser::parse() {
+std::unique_ptr<ASTnode> Parser::parse() {
     advance();
     if (statement()) {
-        return 0;
+        return nullptr;
     }
     return expr();
 }
@@ -22,7 +24,8 @@ bool Parser::statement() {
             advance();
             if (currentToken.kind == TokenType::ASSIGN) {
                 advance();
-                double rValue = expr();
+                auto exprNode = expr();
+                double rValue = exprNode->evaluate(varMap);
                 varMap[varName] = rValue;
                 return true;
             } else {
@@ -38,54 +41,50 @@ bool Parser::statement() {
     }
 }
 
-double Parser::expr() {
-    double rs = term();
+std::unique_ptr<ASTnode> Parser::expr() {
+    auto left = term();
     while (currentToken.kind == TokenType::PLUS || currentToken.kind == TokenType::MINUS) {
         TokenType op = currentToken.kind;
         advance();
-        double rhs = term();
-        if (op == TokenType::PLUS) 
-            rs += rhs;
-        else
-            rs -= rhs;
+        auto right = term();
+        char opChar = (op == TokenType::PLUS) ? ('+') : ('-');
+        left = std::make_unique<BinaryOpNode>(opChar, std::move(left), std::move(right));
     }
-    return rs;
+    return left;
 }
 
-double Parser::term() {
-    double rs = factor();
+std::unique_ptr<ASTnode> Parser::term() {
+    auto left = factor();
     while (currentToken.kind == TokenType::MULT || currentToken.kind == TokenType::DIVIDE) {
         TokenType op = currentToken.kind;
         advance();
-        double rhs = factor();
-        if (op == TokenType::MULT)
-            rs *= rhs;
-        else {
-            if (rhs == 0.0) throw std::runtime_error("Cannot divide by zero");
-            rs /= rhs;
-        }
+        auto right = factor();
+        char opChar = (op == TokenType::MULT) ? ('*') : ('/');
+        left = std::make_unique<BinaryOpNode>(opChar, std::move(left), std::move(right)); 
+        
     }
-    return rs;
+    return left;
 }
 
-double Parser::factor() {
+std::unique_ptr<ASTnode> Parser::factor() {
     switch (currentToken.kind)
     {
     case TokenType::NUMBER: {
         double value = currentToken.value;
         advance();
-        return value;
+        return std::make_unique<NumberNode>(value);
     }
     case TokenType::LPAREN: {
         advance();
-        double value = expr();
+        auto node = expr();
         if (currentToken.kind != TokenType::RPAREN) throw std::runtime_error("Expected ')'\n");
         advance();
-        return value;
+        return node;
     }
     case TokenType::MINUS: {
         advance();
-        return -factor();
+        auto child = factor();
+        return std::make_unique<BinaryOpNode>('-', std::make_unique<NumberNode>(0), std::move(child));
     }
     case TokenType::PLUS: {
         advance();
@@ -94,12 +93,7 @@ double Parser::factor() {
     case TokenType::IDENTIFIER: {
         std::string name = currentToken.name;
         advance();
-        auto it = varMap.find(name);
-        if (it != varMap.end()) {
-            return it->second;
-        } else {
-            throw std::runtime_error("Undefined variable: " + name);
-        }
+        return std::make_unique<VariableNode>(name);
     }
     default:
         throw std::runtime_error("UNEXPECTED TOKEN");
