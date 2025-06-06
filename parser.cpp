@@ -1,7 +1,7 @@
 #include "parser.h"
 #include <stdexcept>
 
-#include <ASTnode.h>
+#include "ASTnode.h"
 
 
 void Parser::advance() {
@@ -59,9 +59,8 @@ std::unique_ptr<ASTnode> Parser::term() {
         TokenType op = currentToken.kind;
         advance();
         auto right = factor();
-        char opChar = (op == TokenType::MULT) ? ('*') : ('/');
-        left = std::make_unique<BinaryOpNode>(opChar, std::move(left), std::move(right)); 
-        
+        char opChar = (op == TokenType::MULT) ? '*' : '/';
+        left = std::make_unique<BinaryOpNode>(opChar, std::move(left), std::move(right));
     }
     return left;
 }

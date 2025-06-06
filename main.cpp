@@ -8,7 +8,7 @@
 #include "debug.h"
 
 #include "parser.h"
-#include <ASTnode.h>
+#include "ASTnode.h"
 
 
 int main() {
@@ -24,13 +24,13 @@ int main() {
             tokenizer t{line};
             Parser p{t, varMap};
 
-            if(p.statement()) {
-                std::cout << "[OK]\n";
-            } else {
-                auto ast = p.expr();
+            auto ast = p.parse();
+            if (ast) {
                 double result = ast->evaluate(varMap);
                 std::cout << result << '\n';
-        }
+            } else {
+                std::cout << "[OK]\n";
+            }
         }
         catch(const std::exception& e)
         {
