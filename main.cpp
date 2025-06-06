@@ -1,6 +1,7 @@
 #include <iostream>
-#include <vector>
-#include <string>
+ #include <vector>
+ #include <string>
+#include <unordered_map>
 
 #include "tokens.h"
 
@@ -14,10 +15,10 @@ int main() {
     std::unordered_map<std::string, double> varMap;
     std::string line;
 
-    while (std::getline(std::cin, line)) {
-        std::cout << "> ";
-        if (line.empty()) continue;
-        if (line == "exit" || line == "quit") break;
+    std::cout << "> ";
+     while (std::getline(std::cin, line)) {
+         if (line.empty()) continue;
+         if (line == "exit" || line == "quit") break;
         try
         {
             tokenizer t{line};
@@ -36,8 +37,8 @@ int main() {
             std::cerr << "error:" << e.what() << '\n';
         }
         
-        
-    }
+        std::cout << "> ";
+     }
 
     return 0;
 }
