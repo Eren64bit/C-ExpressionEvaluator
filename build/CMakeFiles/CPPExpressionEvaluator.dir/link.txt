@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/CPPExpressionEvaluator.dir/link.d CMakeFiles/CPPExpressionEvaluator.dir/src/ASTnode.cpp.o CMakeFiles/CPPExpressionEvaluator.dir/src/debug.cpp.o CMakeFiles/CPPExpressionEvaluator.dir/src/main.cpp.o CMakeFiles/CPPExpressionEvaluator.dir/src/parser.cpp.o CMakeFiles/CPPExpressionEvaluator.dir/src/tokens.cpp.o -o CPPExpressionEvaluator

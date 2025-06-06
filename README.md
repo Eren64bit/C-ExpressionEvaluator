@@ -1,14 +1,16 @@
 # C++ Expression Evaluator
 
-This project is a simple **expression evaluator** written in C++. It can parse and evaluate mathematical expressions, handle variables, and supports basic assignment statements.
+This project is a simple **expression evaluator** written in C++. It can parse and evaluate mathematical expressions, handle variables, and supports basic assignment statements using an Abstract Syntax Tree (AST).
 
 ## Features
 
 - **Arithmetic operations:** Addition, subtraction, multiplication, division, and parentheses.
-- **Variables:** Define and use variables with `var` keyword (e.g., `var x = 5`).
+- **Variables:** Define and use variables with the `var` keyword (e.g., `var x = 5`).
+- **Print command:** Output values using the `print` keyword (e.g., `print x`).
 - **Assignment:** Assign values to variables.
 - **Error handling:** Detects and reports invalid tokens, undefined variables, and syntax errors.
 - **REPL interface:** Enter expressions interactively in the terminal.
+- **AST-based evaluation:** Expressions are parsed into an AST for correct operator precedence and extensibility.
 
 ## Example Usage
 
@@ -34,28 +36,32 @@ This project is a simple **expression evaluator** written in C++. It can parse a
 ## File Structure
 
 - `main.cpp` — Entry point and REPL loop.
-- `tokens.h/cpp` — Token definitions and tokenizer implementation.
-- `parser.h/cpp` — Parser and AST construction.
-- `ASTnode.h/cpp` — AST node classes and evaluation logic.
-- `debug.h` — (Optional) Debugging utilities.
+- `src/tokens.cpp`, `include/tokens.h` — Token definitions and tokenizer implementation.
+- `src/parser.cpp`, `include/parser.h` — Parser and AST construction.
+- `src/ASTnode.cpp`, `include/ASTnode.h` — AST node classes and evaluation logic.
+- `include/debug.h` — (Optional) Debugging utilities.
+- `CMakeLists.txt` — CMake build configuration.
 
 ## Building
 
-Compile with g++ (or any C++17 compatible compiler):
-
+**With CMake (recommended):**
 ```sh
-g++ main.cpp tokens.cpp parser.cpp ASTnode.cpp -o program
+mkdir build
+cd build
+cmake ..
+make
+./CPPExpressionEvaluator
+```
+
+**Or with g++ (if you prefer manual compilation):**
+```sh
+g++ src/main.cpp src/tokens.cpp src/parser.cpp src/ASTnode.cpp -Iinclude -o program
+./program
 ```
 
 ## Usage
 
-Run the program:
-
-```sh
-./program
-```
-
-Type expressions or assignments, and see the results. Type `exit` or `quit` to leave.
+Run the program and type expressions or assignments. Type `exit` or `quit` to leave.
 
 ## License
 
