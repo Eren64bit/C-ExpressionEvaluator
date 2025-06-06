@@ -1,24 +1,43 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "tokens.h"
 
 #include "debug.h"
 
 #include "parser.h"
+#include <ASTnode.h>
 
 
 int main() {
-    std::unordered_map<std::string, double> sVars;
-    tokenizer t("var x = 5");
-    tokenizer r("x * 2 + 3");
-    
-    Parser p1(t, sVars);
-    Parser p2(r, sVars);
+    std::unordered_map<std::string, double> varMap;
+    std::string line;
 
-    p1.parse();
-    double result = p2.parse();
+    while (std::getline(std::cin, line)) {
+        std::cout << "> ";
+        if (line.empty()) continue;
+        if (line == "exit" || line == "quit") break;
+        try
+        {
+            tokenizer t{line};
+            Parser p{t, varMap};
 
-    std::cout << "Sonuç: " << result << "\n";
+            if(p.statement()) {
+                std::cout << "[OK]\n";
+            } else {
+                auto ast = p.expr();
+                double result = ast->evaluate(varMap);
+                std::cout << result << '\n';
+        }
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << "error:" << e.what() << '\n';
+        }
+        
+        
+    }
+
     return 0;
 }
