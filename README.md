@@ -46,6 +46,7 @@ This project is a simple **expression evaluator** written in C++. It can parse a
 
 **With CMake (recommended):**
 ```sh
+rmdir build
 mkdir build
 cd build
 cmake ..
