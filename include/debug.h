@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../Tokenizer/tokens.h"
+#include "tokens.h"
 
 class errorHandler{
     private:

@@ -61,6 +61,8 @@ while (pos < input.size() && std::isspace(static_cast<unsigned char>(input[pos])
 
         std::string upperTemp = temp;
         std::transform(upperTemp.begin(), upperTemp.end(), upperTemp.begin(), ::toupper);
+        if (upperTemp == "PRINT")
+            return {TokenType::PRINT, 0}
         if (upperTemp == "VAR")
             return {TokenType::VAR, 0};
 

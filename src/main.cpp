@@ -3,13 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "tokens.h"
 
-#include "debug.h"
-
-#include "parser.h"
-#include "ASTnode.h"
-
+#include "../include/tokens.h"
+#include "../include/parser.h"
+#include "../include/ASTnode.h"
+#include "../include/debug.h"
 
 int main() {
     std::unordered_map<std::string, double> varMap;
@@ -19,6 +17,7 @@ int main() {
      while (std::getline(std::cin, line)) {
          if (line.empty()) continue;
          if (line == "exit" || line == "quit") break;
+         
         try
         {
             tokenizer t{line};

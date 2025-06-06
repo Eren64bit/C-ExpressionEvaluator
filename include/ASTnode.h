@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../Tokenizer/tokens.h"
+#include "tokens.h"
 #include <unordered_map>
 
 class ASTnode {

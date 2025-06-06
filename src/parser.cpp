@@ -36,6 +36,12 @@ bool Parser::statement() {
             throw std::runtime_error("Expected Variable name after Var\n");
             return false;
         }
+    } else if (currentToken.kind == TokenType::PRINT) {
+        advance();
+        auto exprNode = expr();
+        double rV = exprNode->evaluate(varMap);
+        std::cout << rV << '\n';
+        return true;
     } else {
         return false;
     }

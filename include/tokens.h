@@ -8,6 +8,7 @@ enum class TokenType {
     PLUS, MINUS, MULT, DIVIDE,
     LPAREN, RPAREN,
     IDENTIFIER, VAR, ASSIGN,
+    PRINT,
     NUMBER, INVALID, END_OF_FILE
     
 };
