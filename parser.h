@@ -1,6 +1,9 @@
 #pragma once
 #include "tokens.h"
 #include <unordered_map>
+#include <memory>
+
+class ASTnode;
 
 class Parser{
 private:
